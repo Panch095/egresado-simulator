@@ -11,16 +11,23 @@
         <!-- PANTALLA DE TÍTULO -->
         <div id="pantalla-titulo" class="pantalla">
             <h1>EGRESADO<br><span>SIMULATOR</span></h1>
-            <p>Serious Game: Agilidad y Memoria</p>
             <div class="decoracion">🍔</div>
-            <button onclick="iniciarIntroduccion()">COMENZAR CARRERA</button>
+            
+            <div class="satira-box">
+                <p><b>Sátira Académica:</b></p>
+                <p>Una simulación sobre la agilidad mental requerida en el sector servicios frente a las expectativas del recién egresado.</p>
+            </div>
+
+            <button class="btn-principal" onclick="iniciarIntroduccion()">COMENZAR CARRERA</button>
+            
+            <p class="footer-creditos">Desarrollado como Material Didáctico</p>
         </div>
 
         <!-- PANTALLA DE CINEMÁTICA -->
         <div id="pantalla-cinematica" class="pantalla oculto">
             <div id="monitor">
                 <p id="texto-historia"></p>
-                <button onclick="avanzarHistoria()">Continuar...</button>
+                <button class="btn-terminal" onclick="avanzarHistoria()">[ CONTINUAR ]</button>
             </div>
         </div>
 
