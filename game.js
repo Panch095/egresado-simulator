@@ -5,17 +5,17 @@ let pedidosHoy = 0;
 let pedidoActual = [];
 let construccionJugador = [];
 let pacienciaInterval;
-let ticketTimeout; // Variable para controlar el bug del ticket
+let ticketTimeout;
 
 const PEDIDOS_META = 4;
 const historia = [
-    "Día 1: Te graduaste de ing. pero terminaste aquí. Tienes 3 errores para toda la semana.",
-    "Día 2: Los clientes llegan más rápido. El gerente no perdona olvidos.",
-    "Día 3: El ticket desaparecerá antes. ¡Entrena esa memoria a corto plazo!",
-    "Día 4: Hora pico. Los pedidos son más grandes y complejos.",
-    "Día 5: Casi es fin de semana. No dejes que la paciencia se agote.",
-    "Día 6: La presión es máxima. El éxito depende de tu velocidad.",
-    "Día 7: ÚLTIMO DÍA. Demuestra tu agilidad mental y sobrevive al sistema."
+    "Día 1: Te graduaste con honores, pero 'Burger Boss' es quien llamó primero. Tienes 3 errores para toda la semana laboral.",
+    "Día 2: El gerente dice que la fila crece. Si no memorizas rápido, el descuento viene de tu sueldo.",
+    "Día 3: El ticket desaparece más rápido. ¡Optimiza tus procesos cerebrales, ingeniero!",
+    "Día 4: Hora pico. El estrés aumenta y los pedidos son más grandes. Mantén la calma.",
+    "Día 5: Viernes de quincena. No dejes que la barra de paciencia llegue a cero.",
+    "Día 6: Casi termina la semana. Tu agilidad mental ha mejorado, pero un error puede ser fatal.",
+    "Día 7: ÚLTIMO DÍA. Demuestra que tu formación sirve para algo más que hacer hamburguesas perfectas."
 ];
 
 // --- NAVEGACIÓN ---
@@ -42,22 +42,22 @@ function iniciarNuevoPedido() {
         return;
     }
     
-    // Limpiar interfaz
+    // Reset de interfaz
     document.getElementById('dia-actual').textContent = diaActual;
     document.getElementById('contador-errores').textContent = errores;
     document.getElementById('hamburguesa-container').innerHTML = "";
     document.getElementById('ticket-visual').classList.add('oculto');
     construccionJugador = [];
     
-    // Limpiar cualquier temporizador previo (Fix del bug)
+    // Limpiar procesos previos
     clearTimeout(ticketTimeout);
     clearInterval(pacienciaInterval);
 
-    // Pequeño retraso para resetear el estado visual
+    // Pequeño delay para que el jugador se prepare
     setTimeout(() => {
         generarPedido();
         iniciarPaciencia();
-    }, 200);
+    }, 300);
 }
 
 function generarPedido() {
@@ -66,8 +66,8 @@ function generarPedido() {
     listaUI.innerHTML = "";
     
     pedidoActual = ["Pan Inferior"];
-    // Dificultad: escala de ingredientes según el día
-    const complejidad = diaActual > 4 ? 4 : 2;
+    // Dificultad: escala ingredientes según día
+    const complejidad = diaActual > 4 ? 4 : 2; 
     const cantidad = Math.floor(Math.random() * complejidad) + 2;
     const ingredientes = ["Carne", "Queso", "Lechuga"];
     
@@ -82,11 +82,10 @@ function generarPedido() {
         listaUI.appendChild(li);
     });
 
-    // Mostrar ticket
     ticket.classList.remove('oculto');
     
-    // Tiempo de memoria disminuye cada día (Día 1: 4s -> Día 7: 1.5s)
-    const tiempoMemoria = Math.max(1500, 4500 - (diaActual * 400));
+    // Tiempo de memoria disminuye (Día 1: 4.5s -> Día 7: 1.5s)
+    const tiempoMemoria = Math.max(1500, 4500 - (diaActual * 450));
     
     ticketTimeout = setTimeout(() => {
         ticket.classList.add('oculto');
@@ -94,7 +93,7 @@ function generarPedido() {
 }
 
 function iniciarPaciencia() {
-    let tiempo = Math.max(8, 20 - (diaActual * 1.5));
+    let tiempo = Math.max(7, 20 - (diaActual * 1.8)); // Segundos
     let actual = tiempo;
     const barra = document.getElementById('paciencia-barra');
 
@@ -103,13 +102,14 @@ function iniciarPaciencia() {
         let porcentaje = (actual / tiempo) * 100;
         barra.style.width = porcentaje + "%";
 
+        // Cambio de color visual
         if (porcentaje < 30) barra.style.background = "#e74c3c";
         else if (porcentaje < 60) barra.style.background = "#f1c40f";
         else barra.style.background = "#2ecc71";
 
         if (actual <= 0) {
             clearInterval(pacienciaInterval);
-            registrarError("¡El cliente se fue por tardanza!");
+            registrarError("¡El cliente perdió la paciencia!");
         }
     }, 100);
 }
@@ -117,23 +117,24 @@ function iniciarPaciencia() {
 function agregarIngrediente(ing) {
     construccionJugador.push(ing);
     const div = document.createElement('div');
-    div.className = `ingrediente-render color-${ing.split(' ')[0]}`;
+    const tipoClase = ing.split(' ')[0];
+    div.className = `ingrediente-render color-${tipoClase}`;
     div.textContent = ing;
     document.getElementById('hamburguesa-container').appendChild(div);
 }
 
 function entregarPedido() {
     clearInterval(pacienciaInterval);
-    clearTimeout(ticketTimeout); // Detener el ocultamiento del ticket si entrega rápido
+    clearTimeout(ticketTimeout);
     
     const esCorrecto = JSON.stringify(pedidoActual) === JSON.stringify(construccionJugador);
     
     if (esCorrecto) {
         pedidosHoy++;
-        alert("¡Excelente! Orden correcta.");
+        alert("¡PERFECTO! Orden entregada.");
         iniciarNuevoPedido();
     } else {
-        registrarError("Esa no fue la orden correcta...");
+        registrarError("Esa hamburguesa está mal armada.");
     }
 }
 
@@ -149,6 +150,7 @@ function registrarError(motivo) {
     alert("GERENTE: " + motivo);
 
     if (errores >= 3) {
+        // MENSAJE FINAL SOLICITADO
         alert("GAME OVER: El gerente te despidio. Tu titulo no te salvo hoy.");
         location.reload();
     } else {
@@ -158,11 +160,11 @@ function registrarError(motivo) {
 
 function finalizarDia() {
     if (diaActual < 7) {
-        alert("¡Día completado con éxito!");
+        alert("¡Jornada terminada! Mañana será más difícil.");
         diaActual++;
         iniciarIntroduccion();
     } else {
-        alert("¡LO LOGRASTE! Sobreviviste a la semana laboral. Tu agilidad mental es impresionante.");
+        alert("¡CONTRATADO PERMANENTE! Has sobrevivido a la semana. Tu agilidad mental es superior.");
         location.reload();
     }
 }
