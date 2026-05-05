@@ -8,14 +8,16 @@ let pacienciaInterval;
 let ticketTimeout;
 
 const PEDIDOS_META = 4;
+
+// NARRATIVA SATÍRICA ACTUALIZADA
 const historia = [
-    "Día 1: Te graduaste con honores, pero 'Burger Boss' es quien llamó primero. Tienes 3 errores para toda la semana laboral.",
-    "Día 2: El gerente dice que la fila crece. Si no memorizas rápido, el descuento viene de tu sueldo.",
-    "Día 3: El ticket desaparece más rápido. ¡Optimiza tus procesos cerebrales, ingeniero!",
-    "Día 4: Hora pico. El estrés aumenta y los pedidos son más grandes. Mantén la calma.",
-    "Día 5: Viernes de quincena. No dejes que la barra de paciencia llegue a cero.",
-    "Día 6: Casi termina la semana. Tu agilidad mental ha mejorado, pero un error puede ser fatal.",
-    "Día 7: ÚLTIMO DÍA. Demuestra que tu formación sirve para algo más que hacer hamburguesas perfectas."
+    "Día 1: Tu título en Ingeniería tiene un marco muy bonito, pero aquí solo importa que el pan no se queme. Tienes 3 errores antes de volver a enviar CVs.",
+    "Día 2: El gerente dice que 'somos una familia', por eso espera que trabajes al doble de velocidad por el mismo sueldo. No olvides los ingredientes.",
+    "Día 3: ¿Cinco años de universidad para esto? El ticket ahora desaparece más rápido porque 'el tiempo es dinero' (para el dueño, no para ti).",
+    "Día 4: Hora pico. Los clientes gritan y el calor de la cocina te hace dudar de tus elecciones de vida. Mantén la agilidad mental.",
+    "Día 5: Viernes de frustración. Un cliente pide una hamburguesa triple sin carne. No preguntes, solo memoriza y sobrevive.",
+    "Día 6: Estás tan cansado que ves integrales en las rebanadas de queso. Un error más y el sistema te escupirá como a un tornillo viejo.",
+    "Día 7: ÚLTIMO DÍA. Si logras salir vivo, felicidades: habrás demostrado que tu cerebro de ingeniero es excelente... para servir comida rápida."
 ];
 
 // --- NAVEGACIÓN ---
@@ -42,18 +44,15 @@ function iniciarNuevoPedido() {
         return;
     }
     
-    // Reset de interfaz
     document.getElementById('dia-actual').textContent = diaActual;
     document.getElementById('contador-errores').textContent = errores;
     document.getElementById('hamburguesa-container').innerHTML = "";
     document.getElementById('ticket-visual').classList.add('oculto');
     construccionJugador = [];
     
-    // Limpiar procesos previos
     clearTimeout(ticketTimeout);
     clearInterval(pacienciaInterval);
 
-    // Pequeño delay para que el jugador se prepare
     setTimeout(() => {
         generarPedido();
         iniciarPaciencia();
@@ -66,7 +65,6 @@ function generarPedido() {
     listaUI.innerHTML = "";
     
     pedidoActual = ["Pan Inferior"];
-    // Dificultad: escala ingredientes según día
     const complejidad = diaActual > 4 ? 4 : 2; 
     const cantidad = Math.floor(Math.random() * complejidad) + 2;
     const ingredientes = ["Carne", "Queso", "Lechuga"];
@@ -83,8 +81,6 @@ function generarPedido() {
     });
 
     ticket.classList.remove('oculto');
-    
-    // Tiempo de memoria disminuye (Día 1: 4.5s -> Día 7: 1.5s)
     const tiempoMemoria = Math.max(1500, 4500 - (diaActual * 450));
     
     ticketTimeout = setTimeout(() => {
@@ -93,7 +89,7 @@ function generarPedido() {
 }
 
 function iniciarPaciencia() {
-    let tiempo = Math.max(7, 20 - (diaActual * 1.8)); // Segundos
+    let tiempo = Math.max(7, 20 - (diaActual * 1.8)); 
     let actual = tiempo;
     const barra = document.getElementById('paciencia-barra');
 
@@ -102,14 +98,13 @@ function iniciarPaciencia() {
         let porcentaje = (actual / tiempo) * 100;
         barra.style.width = porcentaje + "%";
 
-        // Cambio de color visual
         if (porcentaje < 30) barra.style.background = "#e74c3c";
         else if (porcentaje < 60) barra.style.background = "#f1c40f";
         else barra.style.background = "#2ecc71";
 
         if (actual <= 0) {
             clearInterval(pacienciaInterval);
-            registrarError("¡El cliente perdió la paciencia!");
+            registrarError("¡Al cliente se le acabó la paciencia (y a ti la dignidad)!");
         }
     }, 100);
 }
@@ -131,10 +126,10 @@ function entregarPedido() {
     
     if (esCorrecto) {
         pedidosHoy++;
-        alert("¡PERFECTO! Orden entregada.");
+        alert("¡ORDEN CORRECTA! Un pequeño paso para la burguer, un gran desperdicio de tu talento.");
         iniciarNuevoPedido();
     } else {
-        registrarError("Esa hamburguesa está mal armada.");
+        registrarError("Esa hamburguesa está mal. Tu lógica de programación no sirve aquí.");
     }
 }
 
@@ -150,7 +145,6 @@ function registrarError(motivo) {
     alert("GERENTE: " + motivo);
 
     if (errores >= 3) {
-        // MENSAJE FINAL SOLICITADO
         alert("GAME OVER: El gerente te despidio. Tu titulo no te salvo hoy.");
         location.reload();
     } else {
@@ -160,11 +154,11 @@ function registrarError(motivo) {
 
 function finalizarDia() {
     if (diaActual < 7) {
-        alert("¡Jornada terminada! Mañana será más difícil.");
+        alert("Día superado. El cansancio aumenta, el sueldo no.");
         diaActual++;
         iniciarIntroduccion();
     } else {
-        alert("¡CONTRATADO PERMANENTE! Has sobrevivido a la semana. Tu agilidad mental es superior.");
+        alert("¡FIN DE LA SEMANA! Has demostrado que puedes seguir instrucciones simples bajo presión. El sueño americano ha sido alcanzado.");
         location.reload();
     }
 }
