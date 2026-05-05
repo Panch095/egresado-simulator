@@ -1,0 +1,61 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Egresado Simulator - Serious Game</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <div id="game-container">
+        <!-- PANTALLA DE TÍTULO -->
+        <div id="pantalla-titulo" class="pantalla">
+            <h1>EGRESADO<br><span>SIMULATOR</span></h1>
+            <p>Serious Game: Agilidad y Memoria</p>
+            <div class="decoracion">🍔</div>
+            <button onclick="iniciarIntroduccion()">COMENZAR CARRERA</button>
+        </div>
+
+        <!-- PANTALLA DE CINEMÁTICA -->
+        <div id="pantalla-cinematica" class="pantalla oculto">
+            <div id="monitor">
+                <p id="texto-historia"></p>
+                <button onclick="avanzarHistoria()">Continuar...</button>
+            </div>
+        </div>
+
+        <!-- PANTALLA DE JUEGO -->
+        <div id="pantalla-juego" class="pantalla oculto">
+            <div id="hud">
+                <span>Día: <b id="dia-actual">1</b>/7</span>
+                <span>Errores: <b id="contador-errores">0</b>/3</span>
+            </div>
+
+            <div id="paciencia-container">
+                <div id="paciencia-barra"></div>
+            </div>
+
+            <div id="order-station">
+                <div id="ticket-visual" class="oculto">
+                    <h3 id="ticket-header">ORDEN</h3>
+                    <ul id="lista-ingredientes"></ul>
+                </div>
+                <div id="mensaje-memoria">¡Memoriza la orden!</div>
+            </div>
+
+            <div id="build-station">
+                <div id="hamburguesa-container"></div>
+                <div id="controles-ingredientes">
+                    <button class="btn-ing" onclick="agregarIngrediente('Pan Inferior')">🍞 Base</button>
+                    <button class="btn-ing" onclick="agregarIngrediente('Carne')">🥩 Carne</button>
+                    <button class="btn-ing" onclick="agregarIngrediente('Queso')">🧀 Queso</button>
+                    <button class="btn-ing" onclick="agregarIngrediente('Lechuga')">🥬 Lechuga</button>
+                    <button class="btn-ing" onclick="agregarIngrediente('Pan Superior')">🍞 Tapa</button>
+                </div>
+                <button id="btn-entregar" onclick="entregarPedido()">ENTREGAR PEDIDO</button>
+            </div>
+        </div>
+    </div>
+    <script src="game.js"></script>
+</body>
+</html>
