@@ -149,7 +149,7 @@ function registrarError(motivo) {
     alert("GERENTE: " + motivo);
 
     if (errores >= 3) {
-        alert("GAME OVER: Has sido despedido por acumular 3 errores.");
+        alert("GAME OVER: El gerente te despidio. Tu titulo no te salvo hoy.");
         location.reload();
     } else {
         iniciarNuevoPedido();
